@@ -30,7 +30,7 @@ class App extends React.Component {
         return(images);
     }
 
-    componentDidMount(){
+   componentDidMount(){
         fetch('https://api.jonathanczyzyk.com/api/v1/images/small', {
             method: 'GET', // or 'PUT'
             headers: {
@@ -60,24 +60,21 @@ class App extends React.Component {
 
     render() {
 
-        if (this.state.isFetchingReady) {
-            return (
-                <>
-                    <DisplayButton horizontalClick={() => this.horizontalDisplay()}
-                                   horizontalClassName={this.horizontalClassName}
-                                   verticalClick={() => this.verticalDisplay()}
-                                    verticalClassName={this.verticalClassName}/>
-                    <div className={"app"}>
-                        <Images images={this.state.images} class={this.imagesClassName}/>
-                        <RefreshButton onClick={() => this.setState({images: this.applyImages()})}/>
-                    </div>
-                </>
-            );
-        } else {
-            return (
-                <p>Waiting..</p>
-            );
+        if (!this.state.isFetchingReady) {
+            return null;
         }
+        return(
+            <>
+                <DisplayButton horizontalClick={() => this.horizontalDisplay()}
+                               horizontalClassName={this.horizontalClassName}
+                               verticalClick={() => this.verticalDisplay()}
+                               verticalClassName={this.verticalClassName}/>
+                <div className={"app"}>
+                    <Images images={this.state.images} class={this.imagesClassName}/>
+                    <RefreshButton onClick={() => this.setState({images: this.applyImages()})}/>
+                </div>
+            </>
+        );
     }
 }
 
