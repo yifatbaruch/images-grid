@@ -3,7 +3,6 @@ import './Image.css';
 
 
 function Image(props){
-    console.log(props.src);
     return(
 
         <div >
@@ -12,8 +11,6 @@ function Image(props){
                     <p>{props.src.description}</p>
                     <p>🖤{props.src.likes}</p>
             </div>
-
-
         </div>
     );
 }
