@@ -60,24 +60,21 @@ class App extends React.Component {
 
     render() {
 
-        if (this.state.isFetchingReady) {
-            return (
-                <>
-                    <DisplayButton horizontalClick={() => this.horizontalDisplay()}
-                                   horizontalClassName={this.horizontalClassName}
-                                   verticalClick={() => this.verticalDisplay()}
-                                    verticalClassName={this.verticalClassName}/>
-                    <div className={"app"}>
-                        <Images images={this.state.images} class={this.imagesClassName}/>
-                        <RefreshButton onClick={() => this.setState({images: this.applyImages()})}/>
-                    </div>
-                </>
-            );
-        } else {
-            return (
-                null
-            );
+        if (!this.state.isFetchingReady) {
+            return (null);
         }
+        return(
+            <>
+                <DisplayButton horizontalClick={() => this.horizontalDisplay()}
+                               horizontalClassName={this.horizontalClassName}
+                               verticalClick={() => this.verticalDisplay()}
+                               verticalClassName={this.verticalClassName}/>
+                <div className={"app"}>
+                    <Images images={this.state.images} class={this.imagesClassName}/>
+                    <RefreshButton onClick={() => this.setState({images: this.applyImages()})}/>
+                </div>
+            </>
+        );
     }
 }
 
