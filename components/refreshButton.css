@@ -1,0 +1,9 @@
+.refreshButton{
+    width:100px;
+    background: blue;
+    color:white;
+    border: none;
+    text-align: center;
+    padding:20px;
+    font-weight: bold;
+}

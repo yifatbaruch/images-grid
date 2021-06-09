@@ -1,0 +1,17 @@
+
+.image{
+    width:200px;
+    height: 200px;
+    padding: 50px 50px 20px;
+}
+
+.image:hover{
+    cursor: pointer;
+}
+
+.textDisplay{
+    width: 200px;
+    padding: 0 50px;
+    text-align: left;
+}
+
