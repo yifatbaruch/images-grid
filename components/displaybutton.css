@@ -12,9 +12,9 @@
     align-content: space-between;
     justify-content: flex-end;
     align-items: flex-end;
-    align-items: flex-end;
     margin:20px;
 }
+
 .boldSmallButton{
     background: darkgray;
     color: white;
