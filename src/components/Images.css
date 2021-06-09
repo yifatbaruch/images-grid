@@ -1,0 +1,13 @@
+.horizontalImages{
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+
+}
+
+.verticalImages{
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+}
+
