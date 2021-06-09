@@ -11,6 +11,8 @@ class App extends React.Component {
             this.state = {
                 isFetchingReady:false,
                 isHorizontal:true,
+                rawData:[],
+                images:[]
             };
         this.horizontalClassName = "smallButton";
         this.verticalClassName = "boldSmallButton";
@@ -44,6 +46,10 @@ class App extends React.Component {
             .catch(error => console.warn(error));
     }
 
+    componentWillUnmount() {
+        this.setState({isFetchingReady:false});
+    }
+
     horizontalDisplay(){
         this.setState({isHorizontal: true});
         this.horizontalClassName = "smallButton";
@@ -61,7 +67,7 @@ class App extends React.Component {
     render() {
 
         if (!this.state.isFetchingReady) {
-            return (null);
+            return null;
         }
         return(
             <>
