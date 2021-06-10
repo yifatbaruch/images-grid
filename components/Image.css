@@ -4,13 +4,15 @@
     text-align: center;
     align-items: center;
     margin-bottom:50px;
+    align-content: center;
+    justify-content: center;
 }
 
 .imageContainer:hover{
     cursor: pointer;
 }
 
-.imageContainer:hover div{
+.imageContainer:hover .description{
     width: 150px;
     padding: 8px 15px;
     visibility: visible;
