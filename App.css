@@ -1,0 +1,11 @@
+
+
+.app{
+  display:flex;
+  flex-direction: column;
+  align-content: space-between;
+  justify-content: center;
+  align-items: center;
+}
+
+
