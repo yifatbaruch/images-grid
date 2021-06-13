@@ -11,6 +11,8 @@ class App extends React.Component {
             this.state = {
                 isFetchingReady:false,
                 isHorizontal:true,
+                rawData:[],
+                images:[]
             };
         this.horizontalClassName = "smallButton";
         this.verticalClassName = "boldSmallButton";
@@ -32,7 +34,7 @@ class App extends React.Component {
 
    componentDidMount(){
         fetch('https://api.jonathanczyzyk.com/api/v1/images/small', {
-            method: 'GET', // or 'PUT'
+            method: 'GET',
             headers: {
                 'x-api-key': 'api-key-6eed70cd-be94-49ca-8aba-3febf300b989',
             },
@@ -42,6 +44,10 @@ class App extends React.Component {
             .then(()=> this.setState({images: this.applyImages()}))
             .then(()=> this.setState({isFetchingReady:true}))
             .catch(error => console.warn(error));
+    }
+
+    componentWillUnmount() {
+        this.setState({isFetchingReady:false});
     }
 
     horizontalDisplay(){

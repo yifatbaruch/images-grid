@@ -26,7 +26,7 @@ test('press refresh button', async () => {
   fireEvent.click(refreshButton);
   const itemsAfterRefreshing = await screen.findAllByRole(/img/);
   expect(itemsAfterRefreshing).toHaveLength(5);
-  expect(itemsBeforeRefreshing).not.toBe(itemsAfterRefreshing);
+  expect(itemsBeforeRefreshing).not.toBe(itemsAfterRefreshing);//???
 });
 
 test('press display buttons', async () => {
