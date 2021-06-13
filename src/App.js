@@ -8,14 +8,12 @@ class App extends React.Component {
 
     constructor(props) {
         super(props);
-            this.state = {
-                isFetchingReady:false,
-                isHorizontal:true,
-                rawData:[],
-                images:[]
-            };
-        this.horizontalClassName = "smallButton";
-        this.verticalClassName = "boldSmallButton";
+        this.state = {
+            isFetchingReady:false,
+            isHorizontal:true,
+            rawData:[],
+            images:[]
+        };
         this.imagesClassName = "horizontalImages";
     }
 
@@ -25,14 +23,20 @@ class App extends React.Component {
 
     applyImages(){
         let images = [];
+        let length = this.state.rawData.length;
         for(let i = 0; i < 5; ++i){
-            let index = this.chooseRandIndex(this.state.rawData.length);
+            let index = this.chooseRandIndex(length);
             images[i] = (this.state.rawData[index]);
+            let temp = this.state.rawData[index];
+            this.state.rawData[index] = this.state.rawData[length - 1];
+            this.state.rawData[length - 1] = temp;
+            --length;
+
         }
         return(images);
     }
 
-   componentDidMount(){
+    componentDidMount(){
         fetch('https://api.jonathanczyzyk.com/api/v1/images/small', {
             method: 'GET',
             headers: {
@@ -46,35 +50,22 @@ class App extends React.Component {
             .catch(error => console.warn(error));
     }
 
-    componentWillUnmount() {
-        this.setState({isFetchingReady:false});
-    }
-
-    horizontalDisplay(){
-        this.setState({isHorizontal: true});
-        this.horizontalClassName = "smallButton";
-        this.verticalClassName = "boldSmallButton";
-        this.imagesClassName = "horizontalImages";
-    }
-
-    verticalDisplay(){
-        this.setState({isHorizontal: false});
-        this.horizontalClassName = "boldSmallButton";
-        this.verticalClassName = "smallButton";
-       this.imagesClassName = "verticalImages";
-    }
-
     render() {
 
         if (!this.state.isFetchingReady) {
             return null;
         }
+
+        if(this.state.isHorizontal){
+            this.imagesClassName = "horizontalImages";
+        }
+        else{
+            this.imagesClassName = "verticalImages";
+        }
         return(
             <>
-                <DisplayButton horizontalClick={() => this.horizontalDisplay()}
-                               horizontalClassName={this.horizontalClassName}
-                               verticalClick={() => this.verticalDisplay()}
-                               verticalClassName={this.verticalClassName}/>
+                <DisplayButton isHorizontal = {this.state.isHorizontal} onClick={() => this.setState(prevState=>
+                    ({isHorizontal: !prevState.isHorizontal}))}/>
                 <div className={"app"}>
                     <Images images={this.state.images} class={this.imagesClassName}/>
                     <RefreshButton onClick={() => this.setState({images: this.applyImages()})}/>

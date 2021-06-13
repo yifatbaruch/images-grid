@@ -4,7 +4,7 @@ import Image from './Image.js';
 
 class Images extends React.Component{
     render(){
-    return(
+        return(
             <div data-testid={"container"} className={this.props.class}>
                 <Image  src={this.props.images[0]}/>
                 <Image  src={this.props.images[1]}/>
