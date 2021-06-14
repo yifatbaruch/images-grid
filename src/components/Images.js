@@ -23,7 +23,6 @@ function Images (props){
             <Image  src={props.images[4]}/>
         </div>
     );
-
 }
 
 export default Images;

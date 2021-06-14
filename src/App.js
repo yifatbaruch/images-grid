@@ -3,7 +3,7 @@ import './App.css';
 import Images from './components/Images.js';
 import DisplayButton from './components/displaybutton.js';
 import RefreshButton from'./components/refreshButton.js';
-import getImages from'./getImages.js';
+import AjaxUtils from './ajaxUtils.js';
 
 function App(){
     const [isHorizontal, setIsHorizontal] = useState(true);
@@ -11,7 +11,7 @@ function App(){
     const [images, setImages] = useState(null);
 
     const chooseRandIndex = useCallback((length)=> {
-        return(Math.floor(Math.random()* length));
+        return(Math.floor(Math.random() * length));
     },[]);
 
     const applyImages =  useCallback(() =>{
@@ -26,11 +26,11 @@ function App(){
             rawData[length - 1] = temp;
         }
         return imagesArr;
-    },[chooseRandIndex,rawData]);
+    },[chooseRandIndex, rawData]);
 
     useEffect(() =>{
         const foo = async ()=>{
-            const data = await getImages();
+            const data = await AjaxUtils.get('https://api.jonathanczyzyk.com/api/v1/images/small');
             setRawData(data);
         };
         foo();
