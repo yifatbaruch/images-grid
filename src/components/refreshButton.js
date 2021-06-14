@@ -1,15 +1,13 @@
 import React from 'react';
 import './refreshButton.css';
 
-class refreshButton extends React.Component{
+function refreshButton(props){
 
-    render() {
-        return(
-            <div className={"refreshContainer"}>
-                <button className={"refreshButton"} onClick={this.props.onClick}>Refresh</button>
-            </div>
-        );
-    }
+    return(
+        <div className={"refreshContainer"}>
+            <button className={"refreshButton"} onClick={props.onClick}>Refresh</button>
+        </div>
+    );
 }
 
 export default refreshButton;

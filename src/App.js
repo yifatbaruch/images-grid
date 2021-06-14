@@ -1,78 +1,60 @@
-import React from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import './App.css';
 import Images from './components/Images.js';
 import DisplayButton from './components/displaybutton.js';
 import RefreshButton from'./components/refreshButton.js';
+import getImages from'./getImages.js';
 
-class App extends React.Component {
+function App(){
+    const [isHorizontal, setIsHorizontal] = useState(true);
+    const [rawData, setRawData] = useState([]);
+    const [images, setImages] = useState(null);
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            isFetchingReady:false,
-            isHorizontal:true,
-            rawData:[],
-            images:[]
-        };
-        this.imagesClassName = "horizontalImages";
-    }
-
-    chooseRandIndex(length){
+    const chooseRandIndex = useCallback((length)=> {
         return(Math.floor(Math.random()* length));
+    },[]);
+
+    const applyImages =  useCallback(() =>{
+        let imagesArr = [];
+        let length = rawData.length;
+        for(let i = 0; i < 5; ++i, --length){
+            let index = chooseRandIndex(length);
+            imagesArr[i] = (rawData[index]);
+            //swap to end
+            let temp = rawData[index];
+            rawData[index] =rawData[length - 1];
+            rawData[length - 1] = temp;
+        }
+        return imagesArr;
+    },[chooseRandIndex,rawData]);
+
+    useEffect(() =>{
+        const foo = async ()=>{
+            const data = await getImages();
+            setRawData(data);
+        };
+        foo();
+    },[]);
+
+    useEffect(() => {
+        if (applyImages && rawData.length) {
+            setImages(applyImages());
+        }
+    }, [applyImages, rawData]);
+
+    if (!images) {
+        return null;
     }
 
-    applyImages(){
-        let images = [];
-        let length = this.state.rawData.length;
-        for(let i = 0; i < 5; ++i){
-            let index = this.chooseRandIndex(length);
-            images[i] = (this.state.rawData[index]);
-            let temp = this.state.rawData[index];
-            this.state.rawData[index] = this.state.rawData[length - 1];
-            this.state.rawData[length - 1] = temp;
-            --length;
-
-        }
-        return(images);
-    }
-
-    componentDidMount(){
-        fetch('https://api.jonathanczyzyk.com/api/v1/images/small', {
-            method: 'GET',
-            headers: {
-                'x-api-key': 'api-key-6eed70cd-be94-49ca-8aba-3febf300b989',
-            },
-        })
-            .then((response) => response.json())
-            .then(data => this.setState({rawData: data}))
-            .then(()=> this.setState({images: this.applyImages()}))
-            .then(()=> this.setState({isFetchingReady:true}))
-            .catch(error => console.warn(error));
-    }
-
-    render() {
-
-        if (!this.state.isFetchingReady) {
-            return null;
-        }
-
-        if(this.state.isHorizontal){
-            this.imagesClassName = "horizontalImages";
-        }
-        else{
-            this.imagesClassName = "verticalImages";
-        }
-        return(
-            <>
-                <DisplayButton isHorizontal = {this.state.isHorizontal} onClick={() => this.setState(prevState=>
-                    ({isHorizontal: !prevState.isHorizontal}))}/>
-                <div className={"app"}>
-                    <Images images={this.state.images} class={this.imagesClassName}/>
-                    <RefreshButton onClick={() => this.setState({images: this.applyImages()})}/>
-                </div>
-            </>
-        );
-    }
+    return(
+        <>
+            <DisplayButton isHorizontal = {isHorizontal} onClick={() => setIsHorizontal(!isHorizontal)}/>
+            <div className={"app"}>
+                <Images images={images} isHorizontal = {isHorizontal}/>
+                <RefreshButton onClick={() => setImages(applyImages())}/>
+            </div>
+        </>
+    );
 }
 
 export default App;

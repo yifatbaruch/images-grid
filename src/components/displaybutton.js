@@ -1,34 +1,30 @@
 import React from 'react';
 import './displaybutton.css';
 
-class displayButton extends React.Component{
+function displayButton(props){
 
-    constructor(props) {
-        super(props);
-        this.isHorizontal = this.props.isHorizontal;
-        this.horizontalClassName = "smallButton";
-        this.verticalClassName = "boldSmallButton";
-    }
+        let isHorizontal = props.isHorizontal;
+        let horizontalClassName;
+        let verticalClassName;
 
-    render() {
-    if(this.isHorizontal) {
-        this.horizontalClassName = "smallButton";
-        this.verticalClassName = "boldSmallButton";
-    }
-    else{
-        this.horizontalClassName = "boldSmallButton";
-        this.verticalClassName = "smallButton";
-    }
+        if(isHorizontal) {
+            horizontalClassName = "smallButton";
+            verticalClassName = "boldSmallButton";
+        }
+        else{
+            horizontalClassName = "boldSmallButton";
+            verticalClassName = "smallButton";
+        }
 
         return (
             <div className={"buttonContainersCol"}>
                 <div className={"buttonContainersRow"}>
-                    <button className={this.horizontalClassName} onClick={this.props.onClick}>⸬</button>
-                    <button className={this.verticalClassName} onClick={this.props.onClick}>⁞</button>
+                    <button className={horizontalClassName} onClick={props.onClick}>⸬</button>
+                    <button className={verticalClassName} onClick={props.onClick}>⁞</button>
                 </div>
             </div>
         );
-    }
+
 }
 
 export default displayButton;
