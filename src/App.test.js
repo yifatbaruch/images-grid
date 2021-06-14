@@ -18,17 +18,6 @@ test('renders display button', async () => {
   expect(await screen.findByText(/⁞/)).toBeInTheDocument();
 });
 
-test('press refresh button', async () => {
-  render(<App />);
-  const refreshButton = await screen.findByText(/Refresh/);
-  const itemsBeforeRefreshing = await screen.findAllByRole(/img/);
-  expect(itemsBeforeRefreshing).toHaveLength(5);
-  fireEvent.click(refreshButton);
-  const itemsAfterRefreshing = await screen.findAllByRole(/img/);
-  expect(itemsAfterRefreshing).toHaveLength(5);
-  expect(itemsBeforeRefreshing).not.toBe(itemsAfterRefreshing);//???
-});
-
 test('press display buttons', async () => {
   render(<App />);
   const horizontalButton = await screen.findByText(/⸬/);
