@@ -16,8 +16,7 @@ function App(){
 
     const applyImages =  useCallback(() =>{
         let imagesArr = [];
-        let length = rawData.length;
-        for(let i = 0; i < 5; ++i, --length){
+        for(let length = rawData.length, i = 0; i < 5; ++i, --length){
             let index = chooseRandIndex(length);
             imagesArr[i] = (rawData[index]);
             //swap to end
